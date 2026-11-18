@@ -21,7 +21,7 @@ static const struct device *port_d = DEVICE_DT_GET(DT_NODELABEL(gpiod)); // conf
 static const struct gpio_dt_spec led_gr = GPIO_DT_SPEC_GET(LED_green, gpios);
 static const struct gpio_dt_spec led_rd = GPIO_DT_SPEC_GET(LED_red, gpios);
 
-volatile int button_state=0;
+volatile int button_state = 0;
 
 K_SEM_DEFINE(fila_ped,1,1);
 
@@ -45,7 +45,6 @@ K_SEM_DEFINE(fila_car3,0,1);
     } 
 }
 
-
     void thread_vd_ex(void *p1, void *p2, void *p3) {
     while(1){
         if(button_state != 0){
@@ -65,14 +64,10 @@ K_SEM_DEFINE(fila_car3,0,1);
 
         k_sem_take(&fila_car2, K_FOREVER);  
            
-        gpio_pin_set_dt(&led_rd,0);
         gpio_pin_set_dt(&led_gr,1);
             
         k_msleep(500);
 
-        if(button_state != 0 ){
-        k_sem_give(&fila_car3);
-        }
     } 
 }
 
@@ -220,6 +215,7 @@ void thread_btn(void *p1, void *p2, void *p3) {
         if(gpio_pin_get_dt(&button) != 0){ 
             button_state++;
             printk("click #%d\n", button_state);
+            if(button_state != 0 ) k_sem_give(&fila_car3);
 
         }
 
