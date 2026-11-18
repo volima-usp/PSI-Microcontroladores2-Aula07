@@ -14,23 +14,23 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
 #define Modo_Normal 0
 #define Modo_Travessia 1
 #define Modo_Noturno 2
-#define Modo_Atual Modo_Noturno
+#define Modo_Atual Modo_Travessia
+
+static const struct device *port_d = DEVICE_DT_GET(DT_NODELABEL(gpiod)); // configura a porta a como uma variavel
+
+static const struct gpio_dt_spec led_gr = GPIO_DT_SPEC_GET(LED_green, gpios);
+static const struct gpio_dt_spec led_rd = GPIO_DT_SPEC_GET(LED_red, gpios);
+
+volatile int button_state=0;
+
+K_SEM_DEFINE(fila_ped,1,1);
+
+K_SEM_DEFINE(fila_car1,0,1);
+K_SEM_DEFINE(fila_car2,1,1);
+K_SEM_DEFINE(fila_car3,0,1);
 
 #if Modo_Atual == Modo_Travessia
     const char *modo = "Pedestre";
-
-    void thread_vd_ex(void *p1, void *p2, void *p3) {
-    while(1){
-        k_sem_take(&fila_ped, K_FOREVER);
-
-        gpio_pin_set(port_d, led_vd,1);
-        gpio_pin_set(port_d, led_vm,0); 
-
-        k_msleep(4000);
-
-        k_sem_give(&fila_ped); 
-    }     
-}
 
     void thread_vm_ex(void *p1, void *p2, void *p3) {
     while(1){
@@ -39,24 +39,24 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
         gpio_pin_set(port_d, led_vm,1);   
         gpio_pin_set(port_d, led_vd,0);
 
-        k_msleep(4000);
+        k_msleep(1000);
 
         k_sem_give(&fila_ped);
     } 
 }
 
-    void thread_vm(void *p1, void *p2, void *p3) {
-        while(1){
 
-        k_sem_take(&fila_car1, K_FOREVER);
+    void thread_vd_ex(void *p1, void *p2, void *p3) {
+    while(1){
+        if(button_state != 0){
+        k_sem_take(&fila_ped, K_FOREVER);
 
-        gpio_pin_set_dt(&led_rd,1);
-        gpio_pin_set_dt(&led_gr,0);
+        gpio_pin_set(port_d, led_vd,1);
+        gpio_pin_set(port_d, led_vm,0); 
 
         k_msleep(4000);
-
-        k_sem_give(&fila_car2);
-    } 
+        }
+    }     
 }
 
     void thread_vd(void *p1, void *p2, void *p3) {
@@ -68,9 +68,11 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
         gpio_pin_set_dt(&led_rd,0);
         gpio_pin_set_dt(&led_gr,1);
             
-        k_msleep(3000);
+        k_msleep(500);
 
+        if(button_state != 0 ){
         k_sem_give(&fila_car3);
+        }
     } 
 }
 
@@ -83,9 +85,23 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
         gpio_pin_set_dt(&led_rd,1);
         gpio_pin_set_dt(&led_gr,1);
 
-        k_msleep(1000);
+        k_msleep(500);
 
         k_sem_give(&fila_car1);
+    } 
+}
+
+    void thread_vm(void *p1, void *p2, void *p3) {
+        while(1){
+
+        k_sem_take(&fila_car1, K_FOREVER);
+
+        gpio_pin_set_dt(&led_rd,1);
+        gpio_pin_set_dt(&led_gr,0);
+
+        k_sleep(K_FOREVER);
+
+        k_sem_give(&fila_car2);
     } 
 }
 
@@ -97,24 +113,23 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
     while(1){
         k_sem_take(&fila_ped, K_FOREVER);
        
-        gpio_pin_set(port_d, led_vm,1);   
-        gpio_pin_set(port_d, led_vd,0);
+        gpio_pin_toggle(port_d, led_vm);   
 
-        k_msleep(1000);
+        k_msleep(500);
 
         k_sem_give(&fila_ped);
     } 
 }
 
-    void thread_vm(void *p1, void *p2, void *p3) {
+    void thread_am(void *p1, void *p2, void *p3) {
         while(1){
 
         k_sem_take(&fila_ped, K_FOREVER);
 
-        gpio_pin_set_dt(&led_rd,1);
-        gpio_pin_set_dt(&led_gr,1);
+        gpio_pin_toggle_dt(&led_rd);
+        gpio_pin_toggle_dt(&led_gr);
 
-        k_msleep(4000);
+        k_msleep(500);
 
         k_sem_give(&fila_ped);
     } 
@@ -200,20 +215,6 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
 
 #endif
 
-static const struct device *port_d = DEVICE_DT_GET(DT_NODELABEL(gpiod)); // configura a porta a como uma variavel
-
-static const struct gpio_dt_spec led_gr = GPIO_DT_SPEC_GET(LED_green, gpios);
-static const struct gpio_dt_spec led_rd = GPIO_DT_SPEC_GET(LED_red, gpios);
-
-volatile int button_state=0, noite = 0;
-
-K_SEM_DEFINE(fila_ped,1,1);
-
-K_SEM_DEFINE(fila_car1,1,1);
-K_SEM_DEFINE(fila_car2,0,1);
-K_SEM_DEFINE(fila_car3,0,1);
-
-
 void thread_btn(void *p1, void *p2, void *p3) {
     while(1){
         if(gpio_pin_get_dt(&button) != 0){ 
@@ -222,7 +223,6 @@ void thread_btn(void *p1, void *p2, void *p3) {
 
         }
 
-        noite = (button_state) % 2;
         k_msleep(300);
     }   
 }
@@ -237,7 +237,6 @@ K_THREAD_DEFINE(yellow_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0);
 
 K_THREAD_DEFINE(buttao_tid, 512, thread_btn, NULL, NULL, NULL, 3, 0, 0);
 
-K_THREAD_DEFINE(butd, 1024, thread_pisca, NULL, NULL, NULL, 4, 0, 0);
 
 void main(void)
 {
