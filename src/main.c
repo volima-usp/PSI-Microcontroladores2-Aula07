@@ -41,7 +41,7 @@ K_SEM_DEFINE(fila_car3,0,1);
 
         k_msleep(1000);
 
-        k_sem_give(&fila_ped);
+        
     } 
 }
 
@@ -55,6 +55,8 @@ K_SEM_DEFINE(fila_car3,0,1);
         gpio_pin_set(port_d, led_vm,0); 
 
         k_msleep(4000);
+
+        k_sem_give(&fila_ped);
         }
     }     
 }
