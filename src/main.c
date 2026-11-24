@@ -3,7 +3,10 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/logging/log.h>
-
+//=======================================================
+//Define se o modo da placa é mestre ou escravo
+//=======================================================
+#define IS_MASTER 0
 
 //=======================================================
 //LEDS EXTERNOS - Semaforo de pedestres
@@ -46,8 +49,6 @@ static const struct gpio_dt_spec button = GPIO_DT_SPEC_GET(BUTTON_NODE, gpios);
 #error "Unsupported board: user_button_0 devicetree alias is not defined"
 #endif 
 static struct gpio_callback button_cb_data;
-
-
 volatile bool button_state=false; //variavel do estado do botão
 
 
@@ -63,6 +64,33 @@ void button_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pin
 }
 
 
+
+//=======================================================
+// Configuração de pino de sincronização
+//=======================================================
+K_SEM_DEFINE(sincronizados,0,1); //estado de sincronização das duas threads
+
+
+# if IS_MASTER == 0 //define em compilação qual será o comportamento e configuração das funções na placa
+    #define SYNC_NODE DT_NODELABEL(user_button_1)
+    #if DT_NODE_HAS_STATUS(SYNC_NODE, okay)
+    static const struct gpio_dt_spec sync = GPIO_DT_SPEC_GET(SYNC_NODE, gpios);
+    #else
+    #error "Unsupported board: user_button_1 devicetree alias is not defined"
+    #endif 
+    static struct gpio_callback sync_cb_data;
+ void sync_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
+    {
+        printk("\n=== Sincronização Recebida: Mestre ficou vermelho, abrindo verde no Escravo ===\n");
+        // Libera a thread verde do escravo
+        k_sem_give(&sincronizados); 
+    }
+#else
+    static const struct device *port_a = DEVICE_DT_GET(DT_NODELABEL(gpioa)); // configura a porta a como uma variavel
+    #define sync_pin 5    // pino PTA5 como pino para disparo do sinal de sincronização
+    
+
+#endif
 
 //=======================================================
 //Modo de trabalho do código - alterar para ver diferentes comportamentos
@@ -81,11 +109,20 @@ K_SEM_DEFINE(fila_ped1,1,1); //estado vermelho
 K_SEM_DEFINE(fila_ped2,0,1); //estado vermelho
 
 
-
+//=======================================================
+// Semáforos para controlar os estados do semaforo de carros
+//=======================================================
+#if IS_MASTER == 1
+    #define INIT_CAR_RED 0
+    #define INIT_CAR_GREEN 1
+#else
+    #define INIT_CAR_RED 1
+    #define INIT_CAR_GREEN 0
+#endif
 
 //semáforo pra controlar os estados do semaforo de carros
-K_SEM_DEFINE(fila_car1,0,1); //estado vermelho
-K_SEM_DEFINE(fila_car2,1,1); // estado verde
+K_SEM_DEFINE(fila_car1,INIT_CAR_RED,1); //estado vermelho
+K_SEM_DEFINE(fila_car2,INIT_CAR_GREEN,1); // estado verde
 K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
 
 
@@ -95,7 +132,7 @@ K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
 
     void thread_vm_ex(void *p1, void *p2, void *p3) {
     while(1){
-        
+        k_sem_take(&sincronizados, K_FOREVER); // só funciona quando ambos estiverem sincronizados.
         k_sem_take(&fila_ped1, K_FOREVER);
         if(!button_state){
         
@@ -115,7 +152,7 @@ K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
     void thread_vd_ex(void *p1, void *p2, void *p3) {
     while(1){
         
-        
+        k_sem_take(&sincronizados, K_FOREVER);
         if(button_state){
         k_sem_take(&fila_ped2, K_FOREVER);
         
@@ -125,7 +162,7 @@ K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
         gpio_pin_set(port_d, led_vd,1);
         gpio_pin_set(port_d, led_vm,0);
         button_state = false; 
-        k_msleep(3000);
+        k_msleep(4000);
         // aqui a thread dorme para outras executarem.
         
         
@@ -137,7 +174,7 @@ K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
     void thread_vd(void *p1, void *p2, void *p3) {
 
     while(1){
-        
+        k_sem_take(&sincronizados, K_FOREVER);
         k_sem_take(&fila_car2,K_FOREVER);
         if(!button_state){
           
@@ -158,7 +195,7 @@ K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
     void thread_am(void *p1, void *p2, void *p3) {
 
     while(1){
-
+        k_sem_take(&sincronizados, K_FOREVER);
         k_sem_take(&fila_car3,K_FOREVER);  
         
         gpio_pin_set_dt(&led_rd,1);
@@ -172,14 +209,22 @@ K_SEM_DEFINE(fila_car3,0,1); // estado amarelo
 
     void thread_vm(void *p1, void *p2, void *p3) {
         while(1){
-
+        k_sem_take(&sincronizados, K_FOREVER);
         k_sem_take(&fila_car1,K_FOREVER);
-        printk("\nentrei no semáforo vermelho!\n");
         gpio_pin_set_dt(&led_gr,0);
         gpio_pin_set_dt(&led_rd,1);
-       
+       #if IS_MASTER == 1
+            // MESTRE: Envia o pulso de sincronização (ativa o verde do escravo)
+            gpio_pin_set(port_a, sync_pin, 1);
+            k_msleep(50); // Largura do pulso de 50ms
+            gpio_pin_set(port_a, sync_pin, 0);
+            k_msleep(3950); // Termina de esperar o tempo do vermelho (4000ms total)
+        #else
+            // ESCRAVO: Apenas espera o tempo normal do vermelho
+            k_msleep(4000);
+        #endif
         
-        k_msleep(3000);
+        
         
         k_sem_give(&fila_car2);
     } 
@@ -209,7 +254,7 @@ K_THREAD_DEFINE(yellow_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0); //thread
 
     void thread_am(void *p1, void *p2, void *p3) {
         while(1){
-
+        
         k_sem_take(&fila_ped1, K_FOREVER);
 
         gpio_pin_toggle_dt(&led_rd);
@@ -254,6 +299,8 @@ K_THREAD_DEFINE(red_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0); //thread do
     } 
 }
 
+
+
     void thread_vm(void *p1, void *p2, void *p3) {
         while(1){
 
@@ -262,7 +309,16 @@ K_THREAD_DEFINE(red_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0); //thread do
         gpio_pin_set_dt(&led_rd,1);
         gpio_pin_set_dt(&led_gr,0);
 
-        k_msleep(4000);
+        #if IS_MASTER == 1
+            // MESTRE: Envia o pulso de sincronização (ativa o verde do escravo)
+            gpio_pin_set(port_a, sync_pin, 1);
+            k_msleep(50); // Largura do pulso de 50ms
+            gpio_pin_set(port_a, sync_pin, 0);
+            k_msleep(3950); // Termina de esperar o tempo do vermelho (4000ms total)
+        #else
+            // ESCRAVO: Apenas espera o tempo normal do vermelho
+            k_msleep(4000);
+        #endif
 
         k_sem_give(&fila_car2);
     } 
@@ -271,12 +327,16 @@ K_THREAD_DEFINE(red_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0); //thread do
     void thread_vd(void *p1, void *p2, void *p3) {
 
     while(1){
-
+    
         k_sem_take(&fila_car2, K_FOREVER);  
-           
+        #if IS_MASTER == 0
+            // ESCRAVO: Trava aqui até receber o pulso do Mestre
+            k_sem_take(&sincronizados, K_FOREVER);
+        #endif              
+        
         gpio_pin_set_dt(&led_rd,0);
         gpio_pin_set_dt(&led_gr,1);
-            
+  
         k_msleep(3000);
 
         k_sem_give(&fila_car3);
@@ -330,6 +390,31 @@ K_THREAD_DEFINE(yellow_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0); //thread
 void main(void)
 { int ret_but, ret_led_vd, ret_led_vm, ret_led_ped_vm, ret_led_ped_vd;
     
+    //=======================================================
+    // Configuração do pino de Sincronização
+    //=======================================================
+#if IS_MASTER == 0 // ESCRAVO
+    if (!gpio_is_ready_dt(&sync)) {
+        printk("ERRO: Pino de sync (Escravo) não está disponível!\n");
+        return;
+    }
+    // Configura como entrada (esperando o pulso do Mestre)
+    gpio_pin_configure_dt(&sync, GPIO_INPUT | GPIO_PULL_DOWN);
+    
+    // Interrupção na borda de subida (quando o Mestre manda o pino para 1)
+    gpio_pin_interrupt_configure_dt(&sync, GPIO_INT_EDGE_RISING);
+    gpio_init_callback(&sync_cb_data, sync_isr, BIT(sync.pin));
+    gpio_add_callback(sync.port, &sync_cb_data);
+
+#else // MESTRE
+    if (!device_is_ready(port_a)) {
+        printk("ERRO: port_a (Mestre) não está pronto!\n");
+        return;
+    }
+    // Configura como saída, inativo no início
+    gpio_pin_configure(port_a, sync_pin, GPIO_OUTPUT_INACTIVE);
+#endif
+
     // Verificar se o botão está disponível
 
     if (!gpio_is_ready_dt(&button)) {
