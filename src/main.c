@@ -77,8 +77,8 @@ void button_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pin
 
 
 //semáforo pra controlar os estados do semaforo de pedestres
-K_SEM_DEFINE(fila_ped1,1,1); //estado vermelho
-K_SEM_DEFINE(fila_ped2,0,1); //estado vermelho
+K_SEM_DEFINE(fila_ped1,0,1); //estado verde
+K_SEM_DEFINE(fila_ped2,1,1); //estado vermelho
 
 
 
@@ -197,27 +197,27 @@ K_THREAD_DEFINE(yellow_tid, 512, thread_am, NULL, NULL, NULL, 5, 0, 0); //thread
 
     void thread_vm_ex(void *p1, void *p2, void *p3) {
     while(1){
-        k_sem_take(&fila_ped1, K_FOREVER);
+        k_sem_take(&fila_ped2, K_FOREVER);
        
         gpio_pin_toggle(port_d, led_vm);   
-        k_sem_give(&fila_ped1);
+        k_sem_give(&fila_ped2);
         k_msleep(1000);
 
-        //k_sem_give(&fila_ped1);
+        //k_sem_give(&fila_ped2);
     } 
 }
 
     void thread_am(void *p1, void *p2, void *p3) {
         while(1){
 
-        k_sem_take(&fila_ped1, K_FOREVER);
+        k_sem_take(&fila_ped2, K_FOREVER);
 
         gpio_pin_toggle_dt(&led_rd);
         gpio_pin_toggle_dt(&led_gr);
-        k_sem_give(&fila_ped1);   
+        k_sem_give(&fila_ped2);   
         k_msleep(1000);
 
-        //k_sem_give(&fila_ped1);
+        //k_sem_give(&fila_ped2);
     } 
 }
 K_THREAD_DEFINE(redEx_tid, 512, thread_vm_ex, NULL, NULL, NULL, 5, 0, 0); //thread do led de pedestres vermelho
