@@ -1,0 +1,11 @@
+# Load Zephyr Arch Kconfig descriptions.
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/rx/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/x86/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/xtensa/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/sparc/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/riscv/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/posix/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/mips/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/arm64/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/arm/Kconfig"
+osource "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/arch/arc/Kconfig"

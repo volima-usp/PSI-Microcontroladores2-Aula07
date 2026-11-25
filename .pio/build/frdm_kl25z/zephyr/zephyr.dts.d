@@ -1,0 +1,24 @@
+empty_file.o: \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/misc/empty_file.c \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/boards/nxp/frdm_kl25z/frdm_kl25z.dts \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/arm/nxp/nxp_kl25z.dtsi \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/common/mem.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/arm/armv6-m.dtsi \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/common/skeleton.dtsi \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/adc/adc.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/dt-util.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_macro.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_internal.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_loops.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_listify.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_internal_is_eq.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_internal_util_inc.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_internal_util_dec.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/sys/util_internal_util_x2.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/clock/kinetis_sim.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/clock/kinetis_mcg.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/gpio/gpio.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/i2c/i2c.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/boards/nxp/frdm_kl25z/frdm_kl25z-pinctrl.dtsi \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/_pio/modules/hal/nxp/dts/nxp/kinetis/MKL25Z128VLK4-pinctrl.h \
+ C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr/dt-bindings/input/input-event-codes.h

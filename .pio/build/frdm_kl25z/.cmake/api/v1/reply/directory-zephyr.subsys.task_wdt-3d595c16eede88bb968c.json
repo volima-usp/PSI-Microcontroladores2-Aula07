@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "zephyr/subsys/task_wdt",
+		"source" : "C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/subsys/task_wdt"
+	}
+}

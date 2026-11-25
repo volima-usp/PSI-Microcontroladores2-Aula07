@@ -1,0 +1,58 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: C:/Users/Administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-exit.o): in function `exit':
+exit.c:(.text.exit+0x28): undefined reference to `_exit'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-closer.o): in function `_close_r':
+closer.c:(.text._close_r+0x18): undefined reference to `_close'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-lseekr.o): in function `_lseek_r':
+lseekr.c:(.text._lseek_r+0x24): undefined reference to `_lseek'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-readr.o): in function `_read_r':
+readr.c:(.text._read_r+0x24): undefined reference to `_read'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-writer.o): in function `_write_r':
+writer.c:(.text._write_r+0x24): undefined reference to `_write'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+sbrkr.c:(.text._sbrk_r+0x18): undefined reference to `_sbrk'
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: C:/Users/Administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-exit.o): in function `exit':
+exit.c:(.text.exit+0x28): undefined reference to `_exit'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-closer.o): in function `_close_r':
+closer.c:(.text._close_r+0x18): undefined reference to `_close'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-lseekr.o): in function `_lseek_r':
+lseekr.c:(.text._lseek_r+0x24): undefined reference to `_lseek'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-readr.o): in function `_read_r':
+readr.c:(.text._read_r+0x24): undefined reference to `_read'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-writer.o): in function `_write_r':
+writer.c:(.text._write_r+0x24): undefined reference to `_write'
+c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib\libc.a(libc_a-sbrkr.o): in function `_sbrk_r':
+sbrkr.c:(.text._sbrk_r+0x18): undefined reference to `_sbrk'
+collect2.exe: error: ld returned 1 exit status
+
+
+Determining if the include file xtensa/config/core-isa.h exists failed with the following output:
+Change Dir: C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/.pio/build/frdm_kl25z/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Users/Administrador/.platformio/packages/tool-ninja/ninja.exe cmTC_86709 && [1/2] Building C object CMakeFiles/cmTC_86709.dir/CheckIncludeFile.c.obj
+FAILED: CMakeFiles/cmTC_86709.dir/CheckIncludeFile.c.obj 
+C:\Users\Administrador\.platformio\packages\toolchain-gccarmnoneeabi\bin\arm-none-eabi-gcc.exe   -nostartfiles -nostdlib -isystem "c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/include" -isystem "c:/users/administrador/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/12.3.1/include-fixed" -Wl,--unresolved-symbols=ignore-in-object-files -Wl,--entry=0 -fuse-ld=bfd -o CMakeFiles/cmTC_86709.dir/CheckIncludeFile.c.obj -c C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/.pio/build/frdm_kl25z/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/.pio/build/frdm_kl25z/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:10: fatal error: xtensa/config/core-isa.h: No such file or directory
+    1 | #include <xtensa/config/core-isa.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+ninja: build stopped: subcommand failed.
+
+
+

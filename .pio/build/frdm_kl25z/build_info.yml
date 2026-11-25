@@ -1,0 +1,44 @@
+cmake:
+  application:
+    configuration-dir: 'C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/zephyr'
+    source-dir: 'C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/zephyr'
+  board:
+    name: 'frdm_kl25z'
+    path:
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/boards/nxp/frdm_kl25z'
+    qualifiers: 'mkl25z4'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/bindings'
+    files:
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/boards/nxp/frdm_kl25z/frdm_kl25z.dts'
+    include-dirs:
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/_pio/modules/hal/nxp/dts'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/include/zephyr'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/common'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/vendor'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/rx'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/x86'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/xtensa'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/sparc'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/riscv'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/posix'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/arm64'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/arm'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts/arc'
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/dts'
+  kconfig:
+    files:
+     - 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/boards/nxp/frdm_kl25z/frdm_kl25z_defconfig'
+     - 'C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/zephyr/prj.conf'
+    user-files:
+     - 'C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/zephyr/prj.conf'
+  toolchain:
+    name: 'gnuarmemb'
+    path: 'C:/Users/Administrador/.platformio/packages/toolchain-gccarmnoneeabi'
+  zephyr:
+    version: '4.2.0'
+    zephyr-base: 'C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0'
+version: '0.1.0'

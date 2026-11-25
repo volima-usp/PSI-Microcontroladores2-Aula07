@@ -1,0 +1,119 @@
+{
+	"backtrace" : 10,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target",
+			"include",
+			"include_boilerplate",
+			"find_package"
+		],
+		"files" : 
+		[
+			"C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/cmake/modules/kernel.cmake",
+			"C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/cmake/modules/zephyr_default.cmake",
+			"C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/share/zephyr-package/cmake/ZephyrConfig.cmake",
+			"C:/Users/Administrador/.platformio/packages/framework-zephyr@3.40200.0/cmake/app/boilerplate.cmake",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 4
+			},
+			{
+				"command" : 1,
+				"file" : 4,
+				"line" : 2,
+				"parent" : 0
+			},
+			{
+				"file" : 3,
+				"parent" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 3,
+				"line" : 25,
+				"parent" : 2
+			},
+			{
+				"file" : 2,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 92,
+				"parent" : 4
+			},
+			{
+				"command" : 1,
+				"file" : 2,
+				"line" : 66,
+				"parent" : 5
+			},
+			{
+				"file" : 1,
+				"parent" : 6
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 140,
+				"parent" : 7
+			},
+			{
+				"file" : 0,
+				"parent" : 8
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 110,
+				"parent" : 9
+			}
+		]
+	},
+	"id" : "pristine::@6890427a1f51a3e7e1df",
+	"name" : "pristine",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 10,
+			"isGenerated" : true,
+			"path" : "C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/.pio/build/frdm_kl25z/CMakeFiles/pristine",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "C:/Users/Administrador/Documents/PlatformIO/Projects/PSI-Microcontroladores2-Aula07/.pio/build/frdm_kl25z/CMakeFiles/pristine.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}
